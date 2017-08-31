@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Girl Boss Motivation</title>
+    <meta name="description" content="Need some motivation girl boss? Use our random quote generator.">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- css -->
+   <link href="https://fonts.googleapis.com/css?family=Dancing+Script|PT+Sans+Narrow" rel="stylesheet">
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="compliments-main.css">
+</head>
+
+<body>
+    <div class="motivation-header">
+    <div id="welcomeContainer">
+            <!-- intro header -->
+                <header class="intro">
+                    <div class="intro-body">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-8 col-md-offset-2">
+                                    <!-- start typer hello  -->
+                                    <div class="brand-heading">
+                                        <span class="txt-rotate" data-period="100" data-rotate='[ "Need some motivation Girl Boss?"]'></span>
+                                    </div>
+                                    <!-- end typer hello -->
+                          <p class="intro-text">
+                          Click below to get a little motivation!
+                        </p>
+          </div>
+        </div>
+            <div id="motivationContainer">
+                <div class="motivation-zone">
+                <div id= "mac">
+                    <img class="macBookPro" src="macbookpro.png" alt="Mountain View" style="width:1000px;height:600px;">
+                    <p id="motivation"></p>
+                </div>
+                    <!-- motivations get shown on click with generatemotivation function -->
+                    <div class="get-motivation">
+                        <button class="button">Click Here For Motivation</button>
+                    </div>
+                </div>
+            </div>
+
+
+   <div class="footer">
+        
+        <p id="copyright">
+        </p>
+            <a class="social" href="https://github.com/chloeadams">
+                <span class="fa fa-github" aria-hidden="true">
+                </span>
+            </a>
+
+        
+    </div>
+    <!-- scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <!-- my JS -->
+    <script src="compliments.js"></script>
+    <script type="text/javascript">
+    // update footer copyright year
+
+        var today = new Date();
+        var year = today.getFullYear();
+
+        var copyright = document.getElementById("copyright");
+        copyright.innerHTML = '© This Girl Codes'+ " " + year;
+
+
+         // About Section Type script
+          // typer for hello
+          window.onload = function() {
+            var elements = document.getElementsByClassName('txt-rotate');
+            for (var i = 0; i < elements.length; i++) {
+                var toRotate = elements[i].getAttribute('data-rotate');
+                var period = elements[i].getAttribute('data-period');
+                if (toRotate) {
+                    new TxtRotate(elements[i], JSON.parse(toRotate), period);
+                }
+            }
+            // INJECT CSS
+            var css = document.createElement("style");
+            css.type = "text/css";
+            css.innerHTML = ".txt-rotate > .wrap { border-right: 10px solid #808080 }";
+            document.body.appendChild(css);
+          };
+
+          var TxtRotate = function(el, toRotate, period) {
+            this.toRotate = toRotate;
+            this.el = el;
+            this.loopNum = 0;
+            this.period = parseInt(period, 1) || 1000;
+            this.txt = '';
+            this.tick();
+            this.isDeleting = false;
+          };
+
+      TxtRotate.prototype.tick = function() {
+        var i = this.loopNum % this.toRotate.length;
+        var fullTxt = this.toRotate[i];
+
+        if (this.isDeleting) {
+            this.txt = fullTxt.substring(0, this.txt.length - 1);
+        } else {
+            this.txt = fullTxt.substring(0, this.txt.length + 1);
+        }
+
+        this.el.innerHTML = '<span class="wrap">' + this.txt + '</span>';
+
+        var that = this;
+        var delta = 200 - Math.random() * 100;
+
+        if (this.isDeleting) {
+            delta /= 2;
+        }
+
+        if (!this.isDeleting && this.txt === fullTxt) {
+            delta = this.period;
+            this.isDeleting = true;
+        } else if (this.isDeleting && this.txt === '') {
+            this.isDeleting = false;
+            this.loopNum++;
+            delta = 200;
+        }
+
+        setTimeout(function() {
+            that.tick();
+        }, delta);
+      };
+    </script>
+
+
+</body>
+
+</html>
